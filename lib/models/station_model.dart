@@ -98,7 +98,18 @@ class Station {
 
 class StationModel {
   Future getProducts() async {
-    String url = "http://10.150.3.231/nec_web/public/api/product";
+    print("Getting products");
+    String url = "http://192.168.43.195/nec_web/public/api/product";
+    var response = await http.get(url);
+    print("Response");
+    print(response.body);
+    return response.body;
+  }
+
+  Future searchProducts(String query,String location) async {
+    print("Starting search");
+    String url =
+        "http://192.168.43.195/nec_web/public/api/product/search/$query/location/$location";
     var response = await http.get(url);
     print("Response");
     print(response.body);

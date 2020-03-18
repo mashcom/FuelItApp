@@ -21,10 +21,10 @@ Widget stationsTile(BuildContext context, station) {
     ),
     subtitle: Row(
       children: <Widget>[
-        storesWatched(Colors.greenAccent, "Petrol :\$20.10 ZWL"),
-        storesWatched(Colors.orangeAccent, "Diesel: \$22.45 ZWL"),
+        badge(Color.fromRGBO(0, 0, 0, 0.1), Colors.black54,  '${station["location_name"]}'),
       ],
     ),
+    trailing: Icon(Icons.more_horiz),
   );
 }
 
@@ -73,7 +73,7 @@ Widget badge(Color background, Color textColor, String text) {
                   style: TextStyle(
                       color: textColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 14),
+                      fontSize: 12),
                 ),
               ],
             ))),

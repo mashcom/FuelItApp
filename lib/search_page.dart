@@ -6,40 +6,26 @@ import 'widgets/lists.dart';
 import 'models/station_model.dart';
 import 'dart:convert';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class SearchPage extends StatefulWidget {
+  SearchPage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController editingController = TextEditingController();
-  bool _productListReady = false;
+class _SearchPageState extends State<SearchPage> {
+  TextEditingController stationController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  bool _productListReady = true;
   List productList = List();
   StationModel sm = StationModel();
 
   @override
   void initState() {
     super.initState();
-    populateProducts();
   }
 
-  void populateProducts() {
-    //  StationModel sm = StationModel();
-    sm.getProducts().then((resp) {
-      var result = jsonDecode(resp);
-
-      if (result['success']) {
-        productList = result['data'];
-      }
-
-      setState(() {
-        _productListReady = true;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +37,36 @@ class _MyHomePageState extends State<MyHomePage> {
               padding:
                   const EdgeInsets.only(top: 5, right: 5, left: 5, bottom: 5),
               child: TextField(
-                onChanged: (value) {
-                  var duration = Duration(seconds: 5);
-                  setState(() {
-                    _productListReady = false;
-                  });
-                  Timer(duration, () {
-                    print(value);
-                    sm.searchProducts(value,"").then((resp) {
+                controller: stationController,
+                decoration: InputDecoration(
+                  labelText: "Search Station",
+                  hintText: "",
+                  prefixIcon: Icon(Icons.local_gas_station),
+                ),
+              ),
+            ),
+             Padding(
+              padding:
+                  const EdgeInsets.only(top: 5, right: 5, left: 5, bottom: 5),
+              child: TextField(
+                controller: locationController,
+                decoration: InputDecoration(
+                  labelText: "Location",
+                  hintText: "",
+                  prefixIcon: Icon(Icons.location_on),
+                ),
+              ),
+            ),
+            Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              onPressed: () {
+                String station_to_find = stationController.text;
+                String location_to_find = locationController.text;
+                 StationModel sm = StationModel();
+                 sm.searchProducts(station_to_find,location_to_find).then((resp) {
                       var result = jsonDecode(resp);
-
+                      print(result);
                       if (result['success']) {
                         productList = result['data'];
                       }
@@ -69,22 +75,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         _productListReady = true;
                       });
                     });
-                  });
-                },
-                controller: editingController,
-                decoration: InputDecoration(
-                  labelText: "Search Station",
-                  hintText: "",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                  ),
-                ),
-              ),
+
+              },
+              child: Text('Search'),
             ),
-            Row(
+          ),
+       Row(
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -93,13 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         Row(
                           children: <Widget>[
                             Icon(
-                              Icons.shopping_cart,
+                              Icons.search,
                               color: Color.fromRGBO(0, 0, 0, 0.6),
                             ),
                             Text(
-                              "Featured Stations",
+                              "Search Result",
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromRGBO(0, 0, 0, 0.6)),
                             ),
@@ -124,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
             ),
+         
           ],
         ),
       ),

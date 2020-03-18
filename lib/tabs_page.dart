@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:service_station_app/search_page.dart';
 import 'home_page.dart';
 
 class TabsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FuelUp',
+      title: 'FuelIt',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.teal,
         fontFamily: "AirbnbCereal",
         platform: TargetPlatform.iOS,
         primaryTextTheme:
             TextTheme(headline: TextStyle(fontWeight: FontWeight.w700)),
-        accentColor: Colors.greenAccent,
+        accentColor: Colors.tealAccent,
       ),
       home: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -27,16 +28,21 @@ class TabsPage extends StatelessWidget {
                   text: "Stations",
                 ),
                 Tab(
+                  icon: Icon(Icons.search),
+                  text: "Search",
+                ),
+                Tab(
                   icon: Icon(Icons.settings),
                   text: "Settings",
                 ),
               ],
             ),
-            title: Text('FuelApp'),
+            title: Text('FuelIt'),
           ),
           body: TabBarView(
             children: [
               MyHomePage(),
+              SearchPage(),
               Text("Settings"),
             ],
           ),
