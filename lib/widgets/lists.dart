@@ -13,7 +13,7 @@ Widget stationsTile(BuildContext context, station) {
         ),
       );
     },
-    leading: FlutterLogo(size: 40.0),
+    leading: Icon(Icons.location_city),
     title: Text(
       '${station["name"]}',
       style: TextStyle(
@@ -22,6 +22,7 @@ Widget stationsTile(BuildContext context, station) {
     subtitle: Row(
       children: <Widget>[
         badge(Color.fromRGBO(0, 0, 0, 0.1), Colors.black54,  '${station["location_name"]}'),
+        badge(Color.fromRGBO(0, 0, 0, 0.1), Colors.black54,  '${station["products"].length} Products'),
       ],
     ),
     trailing: Icon(Icons.more_horiz),
@@ -73,7 +74,7 @@ Widget badge(Color background, Color textColor, String text) {
                   style: TextStyle(
                       color: textColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 12),
+                      fontSize: 10),
                 ),
               ],
             ))),

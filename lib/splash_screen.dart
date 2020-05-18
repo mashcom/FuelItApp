@@ -35,13 +35,13 @@ class _SplashScreenState extends State<SplashScreen> {
             Icon(
               Icons.local_gas_station,
               size: 100,
-              color: Colors.teal,
+              color: Colors.indigo,
             ),
             SizedBox(
               height: 40,
             ),
             Text(
-              "FuelIt",
+              "FuelIt App",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             SizedBox(

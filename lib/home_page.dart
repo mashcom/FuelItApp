@@ -27,14 +27,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void populateProducts() {
-    //  StationModel sm = StationModel();
     sm.getProducts().then((resp) {
       var result = jsonDecode(resp);
-
       if (result['success']) {
         productList = result['data'];
       }
-
       setState(() {
         _productListReady = true;
       });
@@ -93,13 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         Row(
                           children: <Widget>[
                             Icon(
-                              Icons.shopping_cart,
+                              Icons.local_gas_station,
                               color: Color.fromRGBO(0, 0, 0, 0.6),
                             ),
                             Text(
                               "Featured Stations",
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromRGBO(0, 0, 0, 0.6)),
                             ),

@@ -11,15 +11,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FuelIt',
+      title: 'FuelIt App',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.indigo,
         fontFamily: "AirbnbCereal",
         platform: TargetPlatform.android,
         primaryTextTheme: TextTheme(
           headline: TextStyle(fontWeight: FontWeight.w700),
         ),
-        accentColor: Colors.greenAccent,
+        accentColor: Colors.indigoAccent,
       ),
       home: SplashScreen(),
     );

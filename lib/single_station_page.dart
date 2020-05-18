@@ -36,16 +36,7 @@ class _SingleStationPageState extends State<SingleStationPage> {
             elevation: 5,
             primary: true,
             floating: true,
-            flexibleSpace:GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: _kGooglePlex,
-                compassEnabled: true,
-                myLocationEnabled:true ,
-                myLocationButtonEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-              ),
+            flexibleSpace:stationHero(),
             expandedHeight: 475,
             pinned: true,
             title: Text(widget.station['name']),
@@ -128,7 +119,16 @@ class _SingleStationPageState extends State<SingleStationPage> {
         Hero(
           tag: widget.station["name"],
           child: Center(
-            child: Image.asset("assets/map.JPG"),
+            child: GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: _kGooglePlex,
+                compassEnabled: true,
+                myLocationEnabled:true ,
+                myLocationButtonEnabled: true,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              ),
           ),
         ),
         Container(

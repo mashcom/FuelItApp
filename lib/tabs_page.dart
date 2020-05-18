@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:service_station_app/search_page.dart';
+import 'package:service_station_app/settings_page.dart';
 import 'home_page.dart';
 
 class TabsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FuelIt',
+      title: 'FuelIt App',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.indigo,
         fontFamily: "AirbnbCereal",
         platform: TargetPlatform.iOS,
         primaryTextTheme:
             TextTheme(headline: TextStyle(fontWeight: FontWeight.w700)),
-        accentColor: Colors.tealAccent,
+        accentColor: Colors.indigoAccent,
+
       ),
       home: DefaultTabController(
         length: 3,
@@ -24,16 +26,28 @@ class TabsPage extends StatelessWidget {
               indicatorColor: Colors.white,
               tabs: [
                 Tab(
-                  icon: Icon(Icons.local_gas_station),
-                  text: "Stations",
+                 child: Row(
+                    children: <Widget>[
+                      Icon(Icons.local_gas_station),
+                      Text("Stations")
+                    ],
+                  ),
                 ),
                 Tab(
-                  icon: Icon(Icons.search),
-                  text: "Search",
+                 child: Row(
+                    children: <Widget>[
+                      Icon(Icons.search),
+                      Text("Search")
+                    ],
+                  ),
                 ),
                 Tab(
-                  icon: Icon(Icons.settings),
-                  text: "Settings",
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.settings),
+                      Text("Settings")
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -43,7 +57,7 @@ class TabsPage extends StatelessWidget {
             children: [
               MyHomePage(),
               SearchPage(),
-              Text("Settings"),
+              SettingsPage(),
             ],
           ),
         ),

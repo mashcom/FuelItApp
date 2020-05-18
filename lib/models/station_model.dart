@@ -97,9 +97,10 @@ class Station {
 }
 
 class StationModel {
+  final API_BASE = "http://192.168.43.195/nec_web/public/api";
   Future getProducts() async {
     print("Getting products");
-    String url = "http://192.168.43.195/nec_web/public/api/product";
+    String url = "$API_BASE/product";
     var response = await http.get(url);
     print("Response");
     print(response.body);
@@ -109,7 +110,7 @@ class StationModel {
   Future searchProducts(String query,String location) async {
     print("Starting search");
     String url =
-        "http://192.168.43.195/nec_web/public/api/product/search/$query/location/$location";
+        "$API_BASE//product/search/$query/location/$location";
     var response = await http.get(url);
     print("Response");
     print(response.body);
