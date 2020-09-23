@@ -13,7 +13,7 @@ Widget stationsTile(BuildContext context, station) {
         ),
       );
     },
-    leading: Icon(Icons.location_city),
+    leading: Icon(Icons.location_on),
     title: Text(
       '${station["name"]}',
       style: TextStyle(
@@ -21,11 +21,15 @@ Widget stationsTile(BuildContext context, station) {
     ),
     subtitle: Row(
       children: <Widget>[
-        badge(Color.fromRGBO(0, 0, 0, 0.1), Colors.black54,  '${station["location_name"]}'),
-        badge(Color.fromRGBO(0, 0, 0, 0.1), Colors.black54,  '${station["products"].length} Products'),
-      ],
+       Row(children: [
+         //Text(station["products"].toString()),
+         badge(Color.fromRGBO(0, 0, 0, 0.1), Colors.black54,  '${station["city"]}'),
+         badge(Colors.lightGreen, Colors.black, station["products"].length.toString() +" Products"),
+       ]),
+       ],
     ),
-    trailing: Icon(Icons.more_horiz),
+
+    trailing: Icon(Icons.arrow_forward_ios),
   );
 }
 

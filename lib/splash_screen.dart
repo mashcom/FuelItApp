@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Icon(
               Icons.local_gas_station,
               size: 100,
-              color: Colors.indigo,
+              color: Colors.lightGreen,
             ),
             SizedBox(
               height: 40,

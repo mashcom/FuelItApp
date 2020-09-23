@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SingleStationPage extends StatefulWidget {
   final dynamic station;
+
   SingleStationPage({Key key, @required this.station}) : super(key: key);
 
   @override
@@ -36,7 +37,7 @@ class _SingleStationPageState extends State<SingleStationPage> {
             elevation: 5,
             primary: true,
             floating: true,
-            flexibleSpace:stationHero(),
+            flexibleSpace: stationHero(),
             expandedHeight: 475,
             pinned: true,
             title: Text(widget.station['name']),
@@ -49,37 +50,36 @@ class _SingleStationPageState extends State<SingleStationPage> {
               // displays the index of the current item.
               (context, index) {
                 return Column(
-                  children: widget.station['products'].map<Widget>((item) {
-                    final availability_status = item["availability_status"];
-                    final queue_status = item["queue_status"];
+                  children: widget.station["products"].map<Widget>((item) {
+                    final availability = item["availability"];
+                    var availability_status;
+                    if (availability != null) {
+                      availability_status = item["availability"]["available"];
+                    }
+
+                    var availability_text = "No Information";
+
                     Color badge_background_color = Color.fromRGBO(0, 0, 0, 0.1);
                     Color badge_text_color = Colors.black54;
-                    if (availability_status == "Not Available") {
-                      badge_background_color = Colors.yellow;
-                      badge_text_color = Colors.black87;
-                    }
+                    switch (availability_status) {
+                      case 0:
+                        badge_background_color = Colors.yellow;
+                        badge_text_color = Colors.black87;
+                        availability_text = "Not Available";
+                        break;
 
-                    Color queue_badge_background_color =
-                        Color.fromRGBO(0, 0, 0, 0.1);
-                    Color queue_badge_text_color = Colors.black54;
-                    if (queue_status == "Short Queue" ||
-                        queue_status == "No Queue") {
-                      queue_badge_background_color = Colors.green;
-                      queue_badge_text_color = Colors.white;
-                    }
-                    if (queue_status == "Medium Queue") {
-                      queue_badge_background_color = Colors.yellow;
-                      queue_badge_text_color = Colors.black87;
-                    }
+                      case 1:
+                        badge_background_color = Colors.green;
+                        availability_text = "Available";
+                        badge_text_color = Colors.white;
+                        break;
 
-                    if (queue_status == "Long Queue") {
-                      queue_badge_background_color = Colors.red;
-                      queue_badge_text_color = Colors.white;
+                      default:
                     }
 
                     return ListTile(
                       leading: Icon(
-                        Icons.local_gas_station,
+                        Icons.local_car_wash,
                         size: 40,
                         color: Color.fromRGBO(0, 0, 0, 0.2),
                       ),
@@ -90,13 +90,13 @@ class _SingleStationPageState extends State<SingleStationPage> {
                       subtitle: Row(
                         children: [
                           badge(badge_background_color, badge_text_color,
-                              availability_status),
-                          badge(queue_badge_background_color,
-                              queue_badge_text_color, queue_status),
+                              availability_text),
+                          badge(Colors.black12, Colors.black,
+                              "USD\$" + item["usd_price"].toString()),
                         ],
                       ),
                       trailing: Text(
-                        item["price"].toString() + " " + item["currency"],
+                        "ZWL\$" + item["zwl_price"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 18),
                       ),
@@ -120,15 +120,15 @@ class _SingleStationPageState extends State<SingleStationPage> {
           tag: widget.station["name"],
           child: Center(
             child: GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: _kGooglePlex,
-                compassEnabled: true,
-                myLocationEnabled:true ,
-                myLocationButtonEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-              ),
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              compassEnabled: true,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
           ),
         ),
         Container(
@@ -156,7 +156,7 @@ class _SingleStationPageState extends State<SingleStationPage> {
             child: Row(
               children: <Widget>[
                 Text(
-                  widget.station["name"],
+                  widget.station["city"],
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

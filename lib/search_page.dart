@@ -18,6 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   TextEditingController stationController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   bool _productListReady = true;
+  bool _emptySearch=false;
   List productList = List();
   StationModel sm = StationModel();
 
@@ -25,7 +26,6 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             ),
-             Padding(
+            Padding(
               padding:
                   const EdgeInsets.only(top: 5, right: 5, left: 5, bottom: 5),
               child: TextField(
@@ -58,49 +58,65 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
             Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                String station_to_find = stationController.text;
-                String location_to_find = locationController.text;
-                 StationModel sm = StationModel();
-                 sm.searchProducts(station_to_find,location_to_find).then((resp) {
-                      var result = jsonDecode(resp);
-                      print(result);
-                      if (result['success']) {
-                        productList = result['data'];
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: RaisedButton(
+                onPressed: () {
+                  String station_to_find = stationController.text;
+                  String location_to_find = locationController.text;
+                  StationModel sm = StationModel();
+                  sm
+                      .searchProducts(station_to_find, location_to_find)
+                      .then((resp) {
+                    var result = jsonDecode(resp);
+                    print(result);
+                    if (result['status']) {
+                      productList = result['data'];
+                      print(productList);
+                      if (productList.length == 0) {
+                        _emptySearch = true;
+                      } else {
+                        _emptySearch = false;
                       }
+                      print(productList.length);
+                    }
 
-                      setState(() {
-                        _productListReady = true;
-                      });
+                    setState(() {
+                      _productListReady = true;
                     });
-
-              },
-              child: Text('Search'),
+                  });
+                },
+                child: Text('Search'),
+              ),
             ),
-          ),
-       Row(
+            Row(
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.search,
-                              color: Color.fromRGBO(0, 0, 0, 0.6),
-                            ),
-                            Text(
-                              "Search Result",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(0, 0, 0, 0.6)),
-                            ),
-                          ],
-                        ),
+                        _emptySearch
+                            ? Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.local_gas_station,
+                                    color: Color.fromRGBO(0, 0, 0, 0.6),
+                                  ),
+                                  Text(
+                                    "No Results Found!",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                "Results!",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green),
+                              )
                       ],
                     ))
               ],
@@ -120,7 +136,6 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
             ),
-         
           ],
         ),
       ),

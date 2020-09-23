@@ -29,9 +29,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void populateProducts() {
     sm.getProducts().then((resp) {
       var result = jsonDecode(resp);
-      if (result['success']) {
+      //if (result['success']) {
         productList = result['data'];
-      }
+      //}
+
       setState(() {
         _productListReady = true;
       });
@@ -58,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     sm.searchProducts(value,"").then((resp) {
                       var result = jsonDecode(resp);
 
-                      if (result['success']) {
+                      if (result['status']) {
                         productList = result['data'];
                       }
 

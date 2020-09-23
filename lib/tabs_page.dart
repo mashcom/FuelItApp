@@ -10,12 +10,12 @@ class TabsPage extends StatelessWidget {
     return MaterialApp(
       title: 'FuelIt App',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.green,
         fontFamily: "AirbnbCereal",
         platform: TargetPlatform.iOS,
         primaryTextTheme:
             TextTheme(headline: TextStyle(fontWeight: FontWeight.w700)),
-        accentColor: Colors.indigoAccent,
+        accentColor: Colors.lightGreen,
 
       ),
       home: DefaultTabController(

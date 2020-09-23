@@ -97,20 +97,23 @@ class Station {
 }
 
 class StationModel {
-  final API_BASE = "http://192.168.43.195/nec_web/public/api";
+  final API_BASE = "http://192.168.20.177/fuel_it/public/api";
+
   Future getProducts() async {
     print("Getting products");
-    String url = "$API_BASE/product";
+    String url ="$API_BASE/stations/featured/gweru";
     var response = await http.get(url);
     print("Response");
     print(response.body);
     return response.body;
   }
 
-  Future searchProducts(String query,String location) async {
+  Future searchProducts(String query, String location) async {
     print("Starting search");
-    String url =
-        "$API_BASE//product/search/$query/location/$location";
+    print(query);
+
+    print(location);
+    String url = "$API_BASE/stations/search/$query/$location";
     var response = await http.get(url);
     print("Response");
     print(response.body);
